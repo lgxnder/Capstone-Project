@@ -1,5 +1,5 @@
-.env
-env
-venv
+.env/
+env/
+venv/
 
-.vscode
+.vscode/
