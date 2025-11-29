@@ -1,0 +1,15 @@
+To develop a new endpoint with our current architecture,
+first decide the type of routing - front-end or back-end.
+
+For front-end routing, we have the endpoint 'home/',
+which currently serves a simple HTML template.
+Additionally, the root or '/' endpoint redirects to 'home/'.
+Front-end routes are located in ./frontend/urls.py .
+
+For back-end routing, we have a controller for the API,
+which is simply 'api/'. There is currently an endpoint at 'api/test/',
+which serves a simple HTML page.
+Back-end routes are located in ./backend/urls.py .
+
+Specific controller configurations, as well as redirections
+are located in ./config/urls.py .
