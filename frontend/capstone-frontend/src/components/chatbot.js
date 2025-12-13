@@ -1,0 +1,1 @@
+// based on the insight provided in the last stakeholders meeting, look into the AWS service for having a built-in AI rather than using Gemini (preferred, but Gemini remains a strong viable alternative)

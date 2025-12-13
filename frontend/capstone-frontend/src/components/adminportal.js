@@ -1,0 +1,1 @@
+// this is the page where the resources can be managed by the admin users, utilizing CRUD operations and making API calls
