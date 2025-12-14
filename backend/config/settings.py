@@ -27,10 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 	
     'rest_framework', # from djangorestframe lib
-	
-	'backend.apps.ApiConfig',   # backend API
-	'frontend.apps.CoreConfig', # frontend UI
-	'apps.core',
+    
+	'apps.api',
 ]
 
 MIDDLEWARE = [

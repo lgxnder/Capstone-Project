@@ -1,12 +1,10 @@
-1. install the required libraries (a virtual environment is recommended).
-	`pip install -r requirements.txt`
-		OR
-	`pip3 install -r requirements.txt`
+1. Install the required libraries. From project root:
+	pip install -r backend/requirements.txt
 
-2. run the server.
+2. Run the server.
 	`python capstone/manage.py runserver`
 		OR
 	`python3 capstone/manage.py runserver`
 
-3. go to the following URL in a web browser:
+3. Go to the following URL in your web browser of choice:
 	http://127.0.0.1:8000
