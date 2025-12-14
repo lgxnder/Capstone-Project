@@ -1,6 +1,9 @@
 from rest_framework import serializers
-from backend.models import Resource, Category, Tag, Source
+from apps.api.models import Resource, Category, Tag, Source
 
+class ChatMessageSerializer(serializers.Serializer):
+    message = serializers.CharField()
+    
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category

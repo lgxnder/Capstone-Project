@@ -1,21 +1,9 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import path from "path";
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  build: {
-    outDir: "../backend/static",
-    emptyOutDir: true,
-    rollupOptions: {
-      output: {
-        entryFileNames: "assets/index.js",
-        assetFileNames: "assets/index.css",
-      },
-    },
-  },
   server: {
-    port: 8000,
-    strictPort: true,
+    port: 5173,
   },
 });

@@ -1,12 +1,21 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from rest_framework import generics
 from .models import Resource
-from .serializers import ResourceSerializer
+from .serializers import ResourceSerializer, ChatMessageSerializer
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import generics
 
 
-def test_view(req):
-	return render(req, 'backend/test.html')
+from .services.chatbot import generate_response
+
+
+class ChatMessageView(APIView):
+    def post(self, request):
+        message = request.data.get("message", "")
+        return Response({"reply": f"Echo: {message}"})
+
 
 class ResourceListView(generics.ListAPIView):
 	queryset = Resource.objects.all().order_by('title')
