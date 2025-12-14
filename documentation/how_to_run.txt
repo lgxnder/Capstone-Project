@@ -1,11 +1,17 @@
-1. Install the required libraries. From project root:
-	pip install -r backend/requirements.txt
+1. Install dependencies for both the backend and frontend. From root:
+	backend:
+		cd backend
+		pip install -r requirement.txt
+	frontend:
+		cd frontend
+		npm install
 
 2. Run the backend:
 	cd backend
 	python manage.py runserver
 
 3. Run the frontend:
+	cd frontend
+	npm run dev
 
-3. Go to the following URL in your web browser of choice:
-	http://127.0.0.1:8000
+4. Go to 'http://localhost:5173/chat' in your browser of choice to access the chatbot.

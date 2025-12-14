@@ -1,2 +1,2 @@
-/api/chat/
-/chat
+http://localhost:8000/     - backend root
+http://localhost:5173/chat - chatbot
