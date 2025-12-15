@@ -6,5 +6,5 @@ urlpatterns = [
 	
 	#path('resources/', views.ResourceListView.as_view(), name='resource-list'),
 	#path('resources/<int:pk>/', views.ResourceDetailView.as_view(), name='resource-detail'),
-	#path('resources/search/', views.ResourceSearchView.as_view(), name='resource-search'),
+	path('resources/search/', views.ResourceSearchView.as_view(), name='resource-search'),
 ]
