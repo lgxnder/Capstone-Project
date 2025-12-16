@@ -1,6 +1,7 @@
 //Header coponent with navigation links to different pages
 //Not all pages linked in the header are created yet but assuming they will be in the future
 import React from "react";
+import "./Header.css";
 import { Link } from "react-router-dom";
 
 const Header = () => {
