@@ -1,11 +1,11 @@
-.home-container {
+.admin-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
 
-.home-inner {
+.admin-inner {
   margin: auto 0;
   margin-left: auto;
   margin-right: auto;
@@ -19,11 +19,11 @@
   text-align: center;
 }
 
-.chat-link-wrapper {
+.admin-link-wrapper {
   margin-top: 8px;
 }
 
-.chat-link {
+.admin-link {
   display: inline-block;
   padding: 8px 14px;
   background: #0077ff;
@@ -33,14 +33,13 @@
   font-weight: 600;
 }
 
-.chat-link:hover {
+.admin-link:hover {
   background: #0063d1;
 }
 
-.resources {
+.admin-section {
   margin-top: 28px;
 }
 
-.resources p {
-  color: #666;
+.admin-section p {
 }

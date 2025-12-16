@@ -11,8 +11,8 @@ const Header = () => {
         <Link to="/">Care Compass</Link>
     </h1>
       <nav>
-        <Link to="/ChatPage">Chatbot</Link>
-        <Link to="/AdminPage">Admin</Link>
+        <Link to="/chat">Chatbot</Link>
+        <Link to="/admin">Admin</Link>
         <Link to="/about">About Care Compass</Link>
         <Link to="/register">Register</Link>
         <Link to="/login">Login</Link>
