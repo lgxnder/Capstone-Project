@@ -1,10 +1,18 @@
 from django.urls import path
-from .views import ChatMessageView
+from .views import (
+    ChatMessageView,
+    RegisterView,
+    LoginView,
+    LogoutView,
+    UserProfileView,
+)
 
 urlpatterns = [
-	path("chat/", ChatMessageView.as_view()),
-	
-	#path('resources/', views.ResourceListView.as_view(), name='resource-list'),
-	#path('resources/<int:pk>/', views.ResourceDetailView.as_view(), name='resource-detail'),
-	#path('resources/search/', views.ResourceSearchView.as_view(), name='resource-search'),
+    path("chat/", ChatMessageView.as_view()),
+    
+    path('auth/register/', RegisterView.as_view(), name='register'),
+    path('auth/login/', LoginView.as_view(), name='login'),
+    path('auth/logout/', LogoutView.as_view(), name='logout'),
+    path('auth/profile/', UserProfileView.as_view(), name='profile'),
+    
 ]
