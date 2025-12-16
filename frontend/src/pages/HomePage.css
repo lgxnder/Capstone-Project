@@ -1,26 +1,32 @@
 .home-container {
-  align-self: stretch;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 .home-inner {
-  min-height: calc(100vh - 4rem);
+  /* center between header and footer */
+  margin: auto 0;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 24px;
   max-width: 800px;
-  margin: 0 auto;
+  width: 100%;
   text-align: center;
 }
 
 .chat-link-wrapper {
-  margin-top: 12px;
+  margin-top: 8px;
 }
 
 .chat-link {
   display: inline-block;
-  padding: 10px 18px;
+  padding: 8px 14px;
   background: #0077ff;
   color: #fff;
   border-radius: 6px;
