@@ -24,7 +24,8 @@ export default function ChatbotComponent() {
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 120) + 'px';
+      textareaRef.current.style.height =
+        Math.min(textareaRef.current.scrollHeight, 120) + 'px';
     }
   }, [inputValue]);
 
@@ -39,18 +40,21 @@ export default function ChatbotComponent() {
     try {
       const response = await sendChatMessage(userMessage);
       setMessages(prev => [...prev, { role: 'assistant', content: response }]);
-    } catch (error) {
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: 'Sorry, I encountered an error. Please try again.' 
-      }]);
+    } catch {
+      setMessages(prev => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: 'Sorry, I encountered an error. Please try again.'
+        }
+      ]);
     } finally {
       setIsLoading(false);
       textareaRef.current?.focus();
     }
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = e => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
@@ -61,7 +65,7 @@ export default function ChatbotComponent() {
     <div className="chat-container">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=Manrope:wght@400;500;600&display=swap');
-        
+
         * {
           margin: 0;
           padding: 0;
@@ -73,22 +77,18 @@ export default function ChatbotComponent() {
           background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
           min-height: 100vh;
           display: flex;
-          align-items: center;
           justify-content: center;
-          padding: 20px;
+          padding: 24px;
         }
 
         .chat-container {
-          width: 100%;
-          max-width: 900px;
+          width: min(95vw, 1200px);
           height: 85vh;
           background: rgba(255, 255, 255, 0.03);
-          border-radius: 24px;
+          border-radius: 20px;
           border: 1px solid rgba(255, 255, 255, 0.08);
-          backdrop-filter: blur(20px);
-          box-shadow: 
-            0 20px 60px rgba(0, 0, 0, 0.5),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(18px);
+          box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
           display: flex;
           flex-direction: column;
           overflow: hidden;
@@ -98,7 +98,7 @@ export default function ChatbotComponent() {
         @keyframes slideUp {
           from {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(32px);
           }
           to {
             opacity: 1;
@@ -107,63 +107,64 @@ export default function ChatbotComponent() {
         }
 
         .chat-header {
-          padding: 28px 32px;
+          padding: 22px 28px;
           border-bottom: 1px solid rgba(255, 255, 255, 0.06);
           background: rgba(255, 255, 255, 0.02);
         }
 
         .chat-title {
           font-family: 'Crimson Pro', serif;
-          font-size: 32px;
+          font-size: 26px;
           font-weight: 600;
-          color: #fff;
-          letter-spacing: -0.5px;
-          margin-bottom: 6px;
+          color: #ffffff;
+          letter-spacing: -0.4px;
         }
 
         .chat-subtitle {
           font-size: 14px;
-          color: rgba(255, 255, 255, 0.5);
-          font-weight: 400;
+          margin-top: 4px;
+          color: rgba(255, 255, 255, 0.55);
         }
 
         .messages-container {
           flex: 1;
           overflow-y: auto;
-          padding: 32px;
+          padding: 24px;
           display: flex;
           flex-direction: column;
-          gap: 24px;
+          gap: 20px;
         }
 
-        .messages-container::-webkit-scrollbar {
-          width: 6px;
-        }
-
-        .messages-container::-webkit-scrollbar-track {
-          background: rgba(255, 255, 255, 0.02);
-        }
-
-        .messages-container::-webkit-scrollbar-thumb {
-          background: rgba(255, 255, 255, 0.15);
-          border-radius: 3px;
-        }
-
-        .messages-container::-webkit-scrollbar-thumb:hover {
-          background: rgba(255, 255, 255, 0.25);
-        }
-
-        .message {
+        .empty-state {
+          flex: 1;
           display: flex;
-          gap: 16px;
-          max-width: 85%;
-          animation: fadeSlide 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          gap: 12px;
+          animation: fadeIn 0.6s ease;
         }
 
-        @keyframes fadeSlide {
+        .empty-state h2 {
+          font-family: 'Crimson Pro', serif;
+          font-size: 28px;
+          font-weight: 600;
+          color: #ffffff;
+          letter-spacing: -0.3px;
+        }
+
+        .empty-state p {
+          max-width: 420px;
+          font-size: 15px;
+          line-height: 1.6;
+          color: rgba(255, 255, 255, 0.55);
+        }
+
+        @keyframes fadeIn {
           from {
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(8px);
           }
           to {
             opacity: 1;
@@ -171,40 +172,53 @@ export default function ChatbotComponent() {
           }
         }
 
+        .message {
+          display: flex;
+          gap: 14px;
+          max-width: 75%;
+          animation: fadeSlide 0.35s ease;
+        }
+
         .message.user {
           margin-left: auto;
           flex-direction: row-reverse;
         }
 
+        @keyframes fadeSlide {
+          from {
+            opacity: 0;
+            transform: translateY(6px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
         .message-avatar {
-          width: 40px;
-          height: 40px;
-          border-radius: 12px;
+          width: 38px;
+          height: 38px;
+          border-radius: 10px;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 18px;
-          font-weight: 600;
           flex-shrink: 0;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .message.assistant .message-avatar {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          color: #fff;
+          background: linear-gradient(135deg, #667eea, #764ba2);
         }
 
         .message.user .message-avatar {
-          background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-          color: #fff;
+          background: linear-gradient(135deg, #f093fb, #f5576c);
         }
 
         .message-content {
-          flex: 1;
-          padding: 16px 20px;
-          border-radius: 16px;
-          line-height: 1.6;
+          padding: 14px 18px;
+          border-radius: 14px;
           font-size: 15px;
+          line-height: 1.6;
         }
 
         .message.assistant .message-content {
@@ -216,44 +230,11 @@ export default function ChatbotComponent() {
         .message.user .message-content {
           background: rgba(102, 126, 234, 0.15);
           border: 1px solid rgba(102, 126, 234, 0.3);
-          color: #fff;
-        }
-
-        .loading-indicator {
-          display: flex;
-          gap: 6px;
-          padding: 8px;
-        }
-
-        .loading-dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.4);
-          animation: pulse 1.4s ease-in-out infinite;
-        }
-
-        .loading-dot:nth-child(2) {
-          animation-delay: 0.2s;
-        }
-
-        .loading-dot:nth-child(3) {
-          animation-delay: 0.4s;
-        }
-
-        @keyframes pulse {
-          0%, 100% {
-            opacity: 0.3;
-            transform: scale(0.8);
-          }
-          50% {
-            opacity: 1;
-            transform: scale(1.2);
-          }
+          color: #ffffff;
         }
 
         .input-container {
-          padding: 24px 32px;
+          padding: 20px 24px;
           border-top: 1px solid rgba(255, 255, 255, 0.06);
           background: rgba(255, 255, 255, 0.02);
         }
@@ -264,24 +245,17 @@ export default function ChatbotComponent() {
           align-items: flex-end;
           background: rgba(255, 255, 255, 0.05);
           border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 16px;
-          padding: 12px 16px;
-          transition: all 0.2s ease;
-        }
-
-        .input-wrapper:focus-within {
-          border-color: rgba(102, 126, 234, 0.5);
-          box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+          border-radius: 14px;
+          padding: 12px 14px;
         }
 
         .chat-textarea {
           flex: 1;
           background: none;
           border: none;
-          color: #fff;
+          color: #ffffff;
           font-family: 'Manrope', sans-serif;
           font-size: 15px;
-          line-height: 1.5;
           resize: none;
           outline: none;
           min-height: 24px;
@@ -289,98 +263,47 @@ export default function ChatbotComponent() {
         }
 
         .chat-textarea::placeholder {
-          color: rgba(255, 255, 255, 0.3);
+          color: rgba(255, 255, 255, 0.35);
         }
 
         .send-button {
-          width: 40px;
-          height: 40px;
+          width: 38px;
+          height: 38px;
           border-radius: 10px;
           border: none;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          color: #fff;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          background: linear-gradient(135deg, #667eea, #764ba2);
+          color: #ffffff;
           font-size: 18px;
-          transition: all 0.2s ease;
-          flex-shrink: 0;
-          box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-        }
-
-        .send-button:hover:not(:disabled) {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
-        }
-
-        .send-button:active:not(:disabled) {
-          transform: translateY(0);
-        }
-
-        .send-button:disabled {
-          opacity: 0.4;
-          cursor: not-allowed;
-        }
-
-        @media (max-width: 768px) {
-          .chat-container {
-            height: 95vh;
-            border-radius: 0;
-          }
-
-          .chat-header {
-            padding: 20px 20px;
-          }
-
-          .chat-title {
-            font-size: 26px;
-          }
-
-          .messages-container {
-            padding: 20px;
-          }
-
-          .message {
-            max-width: 90%;
-          }
-
-          .input-container {
-            padding: 16px 20px;
-          }
+          cursor: pointer;
         }
       `}</style>
 
       <div className="chat-header">
-        <h1 className="chat-title">Chatbot</h1>
-        <p className="chat-subtitle">Ask me anything</p>
+        <h1 className="chat-title">Care Compass</h1>
+        <p className="chat-subtitle">
+          Find verified mental health resources through conversation.
+        </p>
       </div>
 
       <div className="messages-container">
+        {messages.length === 1 && (
+          <div className="empty-state">
+            <h2>How are you feeling today?</h2>
+            <p>
+              You can ask about support resources, coping strategies, or just talk.
+            </p>
+          </div>
+        )}
+
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.role}`}>
             <div className="message-avatar">
               {message.role === 'assistant' ? '🤖' : '👤'}
             </div>
-            <div className="message-content">
-              {message.content}
-            </div>
+            <div className="message-content">{message.content}</div>
           </div>
         ))}
-        
-        {isLoading && (
-          <div className="message assistant">
-            <div className="message-avatar">🤖</div>
-            <div className="message-content">
-              <div className="loading-indicator">
-                <div className="loading-dot"></div>
-                <div className="loading-dot"></div>
-                <div className="loading-dot"></div>
-              </div>
-            </div>
-          </div>
-        )}
-        
+
         <div ref={messagesEndRef} />
       </div>
 
@@ -390,7 +313,7 @@ export default function ChatbotComponent() {
             ref={textareaRef}
             className="chat-textarea"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={e => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Type your message..."
             rows={1}
@@ -400,7 +323,6 @@ export default function ChatbotComponent() {
             className="send-button"
             onClick={handleSend}
             disabled={!inputValue.trim() || isLoading}
-            aria-label="Send message"
           >
             ↑
           </button>
