@@ -4,25 +4,24 @@ import "./RegisterPage.css";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-  // 1. State to hold form data
   const [formData, setFormData] = useState({
     username: "", 
     email: "",
     password: "",
     password2: "",
-    first_name: "" // Optional but good to have
+    first_name: ""
   });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // 2. Handle typing
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  // 3. Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
       const response = await fetch("http://127.0.0.1:8000/auth/register/", {
@@ -36,16 +35,20 @@ export default function RegisterPage() {
       const data = await response.json();
 
       if (response.ok) {
-        // Registration success: Save tokens and redirect
         localStorage.setItem("access_token", data.tokens.access);
         localStorage.setItem("refresh_token", data.tokens.refresh);
-        navigate("/chat"); // Redirect to chat after signup
+        navigate("/chat");
       } else {
-        // Handle backend validation errors
-        setError(JSON.stringify(data)); 
+        // Better error formatting
+        const errorMsg = Object.entries(data)
+          .map(([key, value]) => `${key}: ${Array.isArray(value) ? value.join(', ') : value}`)
+          .join(' • ');
+        setError(errorMsg || "Registration failed");
       }
     } catch (err) {
-      setError("Failed to connect to the server.");
+      setError("Failed to connect to the server. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,16 +57,18 @@ export default function RegisterPage() {
       <div className="register-inner">
         <div className="register-card">
           <h1>Create Account</h1>
-          {error && <p style={{color: 'red'}}>{error}</p>}
+          <p className="subtitle">Join us and start your journey</p>
+          
+          {error && <div className="error-message">{error}</div>}
           
           <form className="register-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="username">Username</label>
-              {/* Added Username field because Django requires it */}
               <input
                 type="text"
                 id="username"
                 placeholder="Choose a username"
+                value={formData.username}
                 onChange={handleChange}
                 required
               />
@@ -75,6 +80,7 @@ export default function RegisterPage() {
                 type="email"
                 id="email"
                 placeholder="Enter your email"
+                value={formData.email}
                 onChange={handleChange}
                 required
               />
@@ -86,6 +92,7 @@ export default function RegisterPage() {
                 type="password"
                 id="password"
                 placeholder="Create a password"
+                value={formData.password}
                 onChange={handleChange}
                 required
               />
@@ -97,16 +104,24 @@ export default function RegisterPage() {
                 type="password"
                 id="password2"
                 placeholder="Confirm your password"
+                value={formData.password2}
                 onChange={handleChange}
                 required
               />
             </div>
             
-            <button type="submit" className="register-button">
-              Create Account
+            <button type="submit" className="register-button" disabled={loading}>
+              {loading ? "Creating Account..." : "Create Account"}
             </button>
           </form>
-          {/* ... footer links ... */}
+          
+          <div className="divider">
+            <span>or</span>
+          </div>
+          
+          <p className="login-prompt">
+            Already have an account? <Link to="/login" className="login-link">Log In</Link>
+          </p>
         </div>
       </div>
     </div>

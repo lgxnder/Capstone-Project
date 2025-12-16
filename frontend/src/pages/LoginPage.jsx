@@ -9,6 +9,7 @@ export default function LoginPage() {
     password: ""
   });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -16,6 +17,9 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
+
     try {
       const response = await fetch("http://127.0.0.1:8000/auth/login/", {
         method: "POST",
@@ -30,10 +34,12 @@ export default function LoginPage() {
         localStorage.setItem("refresh_token", data.tokens.refresh);
         navigate("/chat"); 
       } else {
-        setError("Invalid credentials");
+        setError(data.error || "Invalid credentials. Please try again.");
       }
     } catch (err) {
-      setError("Server error");
+      setError("Failed to connect to the server. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -42,16 +48,18 @@ export default function LoginPage() {
       <div className="login-inner">
         <div className="login-card">
           <h1>Welcome Back</h1>
-          {error && <p style={{color: 'red'}}>{error}</p>}
+          <p className="subtitle">Log in to continue your journey</p>
+          
+          {error && <div className="error-message">{error}</div>}
           
           <form className="login-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="username">Username</label>
-              {/* Changed type="email" to text/username because your backend requires 'username' */}
               <input
                 type="text"
                 id="username"
                 placeholder="Enter your username"
+                value={formData.username}
                 onChange={handleChange}
                 required
               />
@@ -62,14 +70,33 @@ export default function LoginPage() {
               <input
                 type="password"
                 id="password"
+                placeholder="Enter your password"
+                value={formData.password}
                 onChange={handleChange}
                 required
               />
             </div>
             
-            <button type="submit" className="login-button">Log In</button>
+            <div className="form-options">
+              <label className="checkbox-label">
+                <input type="checkbox" />
+                <span>Remember me</span>
+              </label>
+              <a href="#" className="forgot-link">Forgot password?</a>
+            </div>
+            
+            <button type="submit" className="login-button" disabled={loading}>
+              {loading ? "Logging in..." : "Log In"}
+            </button>
           </form>
-          {/* ... footer links ... */}
+          
+          <div className="divider">
+            <span>or</span>
+          </div>
+          
+          <p className="register-prompt">
+            Don't have an account? <Link to="/register" className="register-link">Sign Up</Link>
+          </p>
         </div>
       </div>
     </div>
