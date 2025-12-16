@@ -1,5 +1,6 @@
 //Footer component will add accessibility to resources later on
 import React from "react";
+import "./Footer.css";
 
 const Footer = () => {
   return (
