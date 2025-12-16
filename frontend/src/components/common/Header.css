@@ -9,6 +9,8 @@
 
 .header-title {
   font-size: 1.5rem;
+  margin: 10px;
+  color: #fff;
 }
 
 nav a {

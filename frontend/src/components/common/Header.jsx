@@ -7,9 +7,10 @@ import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <header className="header">
-      <h1 className="header-title">Care Compass</h1>
+      <h1 className="header-title">
+        <Link to="/">Care Compass</Link>
+    </h1>
       <nav>
-        <Link to="/HomePage">Home</Link>
         <Link to="/ChatPage">Chatbot</Link>
         <Link to="/AdminPage">Admin</Link>
         <Link to="/about">About Care Compass</Link>
