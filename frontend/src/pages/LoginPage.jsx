@@ -82,12 +82,13 @@ export default function LoginPage() {
                 <input type="checkbox" />
                 <span>Remember me</span>
               </label>
-              <a href="#" className="forgot-link">Forgot password?</a>
             </div>
             
             <button type="submit" className="login-button" disabled={loading}>
               {loading ? "Logging in..." : "Log In"}
             </button>
+            
+            <a href="#" className="forgot-link" style={{ textAlign: 'center', display: 'block', marginTop: '16px' }}>Forgot password?</a>
           </form>
           
           <div className="divider">
