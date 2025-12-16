@@ -9,7 +9,7 @@ export default function AdminPage() {
       <Header />
       <div className="admin-inner">
         <h1 style={{ marginBottom: 6 }}>Admin Portal</h1>
-        <p style={{ marginTop: 0, color: "#444" }}>Placeholder for admin tools and settings.</p>
+        <p style={{ marginTop: 0, color: "#444" }}>Welcome back, Administrator.</p>
 
         <div className="admin-link-wrapper">
           <Link to="/chat" className="admin-link">
