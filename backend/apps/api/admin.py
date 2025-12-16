@@ -1,9 +1,5 @@
 from django.contrib import admin
-
-# Register your models here.
-from django.contrib import admin
 from .models import (
-    User,
     Chatbot,
     Message,
     ResourceDb,
@@ -18,19 +14,14 @@ class MessageInline(admin.TabularInline):
     extra = 0
     readonly_fields = ("sender", "content", "timestamp")
 
-#Admin model registrations
-
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ("user_id", "session_id", "timestamp")
-    search_fields = ("session_id",)
-    ordering = ("-timestamp",)
-
+# Admin model registrations
+# Note: User model is already registered by Django automatically,
+# so we don't import or register it here
 
 @admin.register(Chatbot)
 class ChatbotAdmin(admin.ModelAdmin):
     list_display = ("id", "user", "created_at", "last_interaction")
-    search_fields = ("user__session_id",)
+    search_fields = ("user__username",)  # Changed: Django's User has 'username', not 'session_id'
     list_filter = ("created_at", "last_interaction")
     inlines = [MessageInline]
 
@@ -38,7 +29,7 @@ class ChatbotAdmin(admin.ModelAdmin):
 @admin.register(ResourceDb)
 class ResourceDbAdmin(admin.ModelAdmin):
     list_display = ("id", "user", "query_text", "result_count", "via_chatbot", "created_at")
-    search_fields = ("query_text", "user__session_id")
+    search_fields = ("query_text", "user__username")  # Changed: Django's User has 'username', not 'session_id'
     list_filter = ("via_chatbot", "created_at")
 
 
